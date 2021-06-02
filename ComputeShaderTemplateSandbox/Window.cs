@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using ComputeShaderTemplate;
+
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
+namespace ComputeShaderTemplateSandbox
+{
+    public class Window : GameWindow
+    {
+        Simulation _simulation;
+        public Window() : base(GameWindowSettings.Default, NativeWindowSettings.Default)
+        {
+            _simulation = new Simulation();
+        }
+
+        protected override void OnLoad()
+        {
+            _simulation.Load();
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs args)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            _simulation.Render();
+            SwapBuffers();
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs args)
+        {
+            _simulation.Update();
+        }
+    }
+}
