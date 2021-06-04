@@ -18,7 +18,7 @@ layout(std430, binding = 1) buffer Agents
     Agent agents[];
 };
 
-layout (local_size_x = 10, local_size_y = 1) in;
+layout (local_size_x = $AgentCount$, local_size_y = 1) in;
 void main()
 {
 	Agent agent = agents[gl_GlobalInvocationID.x];

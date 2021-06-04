@@ -33,5 +33,10 @@ namespace ComputeShaderTemplateSandbox
         {
             _simulation.Update();
         }
+
+        protected override void OnResize(ResizeEventArgs e)
+        {
+            _simulation.Resize(e.Size.X, e.Size.Y);
+        }
     }
 }

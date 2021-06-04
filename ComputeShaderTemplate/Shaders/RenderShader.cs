@@ -13,7 +13,7 @@ namespace ComputeShaderTemplate.Shaders
 {
     [VertexShaderSource("RenderShader.Vertex")]
     [FragmentShaderSource("RenderShader.Fragment")]
-    public class RenderProgram : Program
+    public class RenderShader : Program
     {
         [VertexAttrib(3, VertexAttribPointerType.Float)]
         public VertexAttrib InPosition { get; protected set; }
@@ -23,9 +23,9 @@ namespace ComputeShaderTemplate.Shaders
 
         public TextureUniform<Texture2D> Texture { get; set; }
 
-        public static RenderProgram Create()
+        public static RenderShader Create()
         {
-            RenderProgram _renderProgram = ObjectTK.Shaders.ProgramFactory.Create<RenderProgram>();
+            RenderShader _renderProgram = ObjectTK.Shaders.ProgramFactory.Create<RenderShader>();
             _renderProgram.Use();
             _renderProgram.Texture.Set(TextureUnit.Texture0);
 
