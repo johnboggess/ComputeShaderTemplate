@@ -11,6 +11,8 @@ using ObjectTK.Shaders;
 using ObjectTK.Buffers;
 
 using ComputeShaderTemplate.Shaders;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace ComputeShaderTemplate
 {
@@ -21,6 +23,7 @@ namespace ComputeShaderTemplate
         FadeShader _fadeShader;
         Texture2D _texture;
         Agent[] _agents;
+        Agent[] _agents2;
         Quad _screen;
 
         Vector2i fadeLocalGroupSize = new Vector2i(10, 10);
@@ -37,7 +40,8 @@ namespace ComputeShaderTemplate
             _texture.Bind(TextureUnit.Texture0);
 
             _agents = Agent.Create(100, new Vector2(_texture.Width / 2, _texture.Height / 2), 10);
-            _agentShader = AgentShader.Create(_agents, _texture);
+            _agents2 = Agent.Create(100, new Vector2(_texture.Width / 4, _texture.Height / 2), 100);
+            _agentShader = AgentShader.Create(_agents, _agents2, _texture);
 
             _fadeShader = FadeShader.Create(fadeLocalGroupSize, _texture);
 
@@ -57,7 +61,6 @@ namespace ComputeShaderTemplate
 
             _fadeShader.Use();
             FadeShader.Dispatch(_texture.Width/fadeLocalGroupSize.X,_texture.Height/fadeLocalGroupSize.Y,1);
-
         }
 
         public void Update()

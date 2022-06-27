@@ -21,17 +21,18 @@ namespace ComputeShaderTemplate.Shaders
 
         public static FadeShader Create(Vector2i localGroupSize , Texture2D texture)
         {
-            ShaderWriter shaderWriter = new ShaderWriter();
-            shaderWriter.Load("Data\\Shaders\\FadeShader.glsl");
-            shaderWriter.Write("SizeX", localGroupSize.X);
-            shaderWriter.Write("SizeY", localGroupSize.Y);
-            shaderWriter.Save("Data\\Shaders\\FadeShader.glsl");
-
-
-            FadeShader fadeShader = ProgramFactory.Create<FadeShader>();
+            FadeShader fadeShader = ProgramFactory.Create<FadeShader>(Preprocess, localGroupSize.X, localGroupSize.Y);
             fadeShader.Use();
             fadeShader.Texture.Bind(0, texture, TextureAccess.WriteOnly);
             return fadeShader;
+        }
+
+        private static string Preprocess(string source, object[] args)
+        {
+            string sizeXName = "$SizeX$";
+            string sizeYName = "$SizeY$";
+            source = source.Replace(sizeXName, args[0].ToString());
+            return source.Replace(sizeYName, args[1].ToString());
         }
     }
 }
